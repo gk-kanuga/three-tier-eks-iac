@@ -1,45 +1,69 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name:  frontend
   namespace: workshop
   labels:
     role: frontend
     env: demo
 spec:
+  selector:
+    matchLabels:
+      app: frontend
   replicas: 1
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 25%
-  selector:
-    matchLabels:
-      role: frontend
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        role: frontend
+        app:  frontend
     spec:
+      # initContainers:
+        # Init containers are exactly like regular containers, except:
+          # - Init containers always run to completion.
+          # - Each init container must complete successfully before the next one starts.
       containers:
-      - name: frontend
-        image: public.ecr.aws/w8u5e4v2/workshop-frontend:v1
-        imagePullPolicy: Always
-        env:
-          - name: REACT_APP_BACKEND_URL
-            value: "http://app.sandipdas.in/api/tasks" #$API_ELB_PUBLIC_FQDN #add your API_Load_Balancer DNS manually here if app does not run
-        ports:
-        - containerPort: 3000
+      - name:  frontend
+        image:  public.ecr.aws/w8u5e4v2/workshop-frontend:v1
+        # resources:
+        #   requests:
+        #     cpu: 100m
+        #     memory: 100Mi
+        #   limits:
+        #     cpu: 100m
+        #     memory: 100Mi
         # livenessProbe:
-        #   httpGet:
-        #     path: /
-        #     port: 3000
-        #   initialDelaySeconds: 2
-        #   periodSeconds: 5
+        #   tcpSocket:
+        #     port: 80
+        #   initialDelaySeconds: 5
+        #   timeoutSeconds: 5
+        #   successThreshold: 1
+        #   failureThreshold: 3
+        #   periodSeconds: 10
         # readinessProbe:
         #   httpGet:
-        #      path: /
-        #      port: 3000
+        #     path: /_status/healthz
+        #     port: 80
         #   initialDelaySeconds: 5
-        #   periodSeconds: 5
+        #   timeoutSeconds: 2
         #   successThreshold: 1
+        #   failureThreshold: 3
+        #   periodSeconds: 10
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://app.sandipdas.in/api/tasks"
+          
+        ports:
+        - containerPort:  3000
+          
+      #   volumeMounts:
+      #   - name: localtime
+      #     mountPath: /etc/localtime
+      # volumes:
+      #   - name: localtime
+      #     hostPath:
+      #       path: /usr/share/zoneinfo/Asia/Shanghai
+      # restartPolicy: Always
