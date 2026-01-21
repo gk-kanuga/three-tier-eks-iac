@@ -5,7 +5,7 @@ metadata:
   namespace: workshop
 spec:
   selector:
-    role: frontend
+    app: frontend
   # type: ClusterIP
   # sessionAffinity: None
   # sessionAffinityConfig:

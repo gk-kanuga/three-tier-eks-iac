@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        role: api  
+        app: api  
     spec:
       # initContainers:
         # Init containers are exactly like regular containers, except:
@@ -27,7 +27,7 @@ spec:
           # - Each init container must complete successfully before the next one starts.
       containers:
       - name:  api
-        image: public.ecr.aws/w8u5e4v2/workshop-backend:v1
+        image: 760711518955.dkr.ecr.us-east-1.amazonaws.com/three-tier-backend
         # resources:
         #   requests:
         #     cpu: 100m

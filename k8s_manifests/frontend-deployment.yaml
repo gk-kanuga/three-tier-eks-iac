@@ -27,7 +27,7 @@ spec:
           # - Each init container must complete successfully before the next one starts.
       containers:
       - name:  frontend
-        image:  public.ecr.aws/w8u5e4v2/workshop-frontend:v1
+        image:  760711518955.dkr.ecr.us-east-1.amazonaws.com/three-tier-frontend
         # resources:
         #   requests:
         #     cpu: 100m
@@ -54,7 +54,7 @@ spec:
         #   periodSeconds: 10
         env:
         - name: REACT_APP_BACKEND_URL
-          value: "http://app.sandipdas.in/api/tasks"
+          value: "http://challenge.ganesh.com/api/tasks"
           
         ports:
         - containerPort:  3000

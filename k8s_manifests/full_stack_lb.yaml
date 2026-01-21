@@ -7,10 +7,12 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/healthcheck-path: /api
 spec:
   ingressClassName: alb
   rules:
-    - host: app.sandipdas.in
+    - host:
       http:
         paths:
           - path: /api
@@ -27,3 +29,6 @@ spec:
                 name: frontend
                 port:
                   number: 3000
+
+
+
